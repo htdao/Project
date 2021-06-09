@@ -25,10 +25,16 @@ class LoginController extends Controller
 
         $email = $request->get('email');
         $password = $request->get('password');
-        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+
+        if (Auth::attempt($data)) {
             $request ->session()->regenerate();
-            // Authentication passed...
-            return redirect()->intended('admin/dashboard');
+            
+            if(Auth::User()->role == 1){
+                return redirect()->intended('admin/dashboard');
+            }else{
+                return redirect()->intended('home/home');
+            }
+
         }else{
             return back()->withErrors([
                 'email' => 'Thông tin user không đúng'
