@@ -19,6 +19,8 @@ Route::get('/', function () {
 Route::get('admin/login', 'Auth\LoginController@showLoginForm')->name('login.form');
 Route::post('admin/login', 'Auth\LoginController@login')->name('login.store');
 Route::get('admin/logout', 'Auth\LogoutController@logout')->name('logout');
+Route::get('admin/register', 'Auth\RegisterController@showForm')->name('register.form');
+Route::post('admin/register', 'Auth\RegisterController@register')->name('register.store');
 
 Route::group([
     'namespace' => 'Backend',
