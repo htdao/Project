@@ -32,9 +32,13 @@ Route::group([
 
     // Quản lý sản phẩm
     Route::group(['prefix' => 'products'], function(){
-       Route::get('/', 'ProductController@index')->name('backend.product.index');
-       Route::get('/create', 'ProductController@create')->name('backend.product.create');
-       Route::get('/{id}/image', 'ProductController@showImages')->name('backend.product.image');
+        Route::get('/', 'ProductController@index')->name('backend.product.index');
+        Route::get('/create', 'ProductController@create')->name('backend.product.create');
+        Route::post('/', 'ProductController@store')->name('backend.product.store');
+        Route::get('/{id}/edit', 'ProductController@edit')->name('backend.product.edit');
+        Route::post('/{id}', 'ProductController@update')->name('backend.product.update');
+
+        Route::get('/{id}/image', 'ProductController@showImages')->name('backend.product.image');
     });
     //Quản lý người dùng
     Route::group(['prefix' => 'users'], function(){
@@ -44,8 +48,13 @@ Route::group([
     });
     //Quản lý danh mục
     Route::group(['prefix' => 'categories'], function(){
-        Route::get('/', 'CategoryController@index')->name('backend.categorie.index');
-        Route::get('/{id}/product', 'CategoryController@showProducts')->name('backend.categorie.product');
+        Route::get('/', 'CategoryController@index')->name('backend.category.index');
+        Route::get('/create', 'CategoryController@create')->name('backend.category.create');
+        Route::post('/', 'CategoryController@store')->name('backend.category.store');
+        Route::get('/{id}/edit', 'CategoryController@edit')->name('backend.category.edit');
+        Route::post('/{id}', 'CategoryController@update')->name('backend.category.update');
+        
+        Route::get('/{id}/product', 'CategoryController@showProducts')->name('backend.category.product');
     });
     //Quản lý đơn hàng
     Route::group(['prefix' => 'orders'], function(){

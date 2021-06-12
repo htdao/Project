@@ -30,7 +30,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //return view('backend.categories.create');
+        $categories = Category::all();
+        return view('backend.categories.create', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -41,7 +44,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = new Category();
+        $category->name = $request->get('name');
+        $category->slug = \Illuminate\Support\Str::slug($request->get('name'));
+        $category->parent_id = $request->get('parent_id');
+        $category->save();
+
+        return redirect()->route('backend.category.index');
     }
 
     /**
@@ -63,7 +72,12 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::find($id);
+        $categories = Category::all();
+        return view('backend.categories.edit', [
+            'categories' => $categories,
+            'category' => $category,
+        ]);
     }
 
     /**
@@ -75,7 +89,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::find($id);
+        $category->name = $request->get('name');
+        $category->slug = \Illuminate\Support\Str::slug($request->get('name'));
+        $category->parent_id = $request->get('parent_id');
+        $category->save();
+
+        return redirect()->route('backend.category.index');
     }
 
     /**
