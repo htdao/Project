@@ -1,7 +1,7 @@
 
 @extends('backend.layouts.master')
 @section('title')
-create
+Tạo mới
 @endsection
 @section('css')
 
@@ -50,7 +50,7 @@ create
                         <div class="form-group">
                             <label>Danh mục sản phẩm</label>
                             <select name="category_id" class="form-control select2" style="width: 100%;">
-                                <option>--Chọn danh mục---</option>
+                                <option>Chọn danh mục</option>
                                 @foreach($categories as $cate)
                                 <option value="{{$cate->id}}">{{$cate->name}}</option>
                                 @endforeach
@@ -87,8 +87,11 @@ create
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Mô tả sản phẩm</label>
-                                <textarea class="textarea" name="content" placeholder="Place some text here"
+                                <textarea class="textarea" value="{{ old('content') }}" name="content" placeholder="Place some text here"
                                 style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                @error('content')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputFile">Hình ảnh sản phẩm</label>
@@ -105,7 +108,7 @@ create
                             <div class="form-group">
                                 <label>Trạng thái sản phẩm</label>
                                 <select name="status" class="form-control select2" style="width: 100%;">
-                                    <option>--Chọn trạng thái---</option>
+                                    <option>Chọn trạng thái</option>
                                     @foreach(\App\Models\Product::$status_text as $key => $value)
                                     <option value="{{ $key }}">{{ $value }}</option>
                                     @endforeach

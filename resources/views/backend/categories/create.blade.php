@@ -50,7 +50,7 @@ create
                         <div class="form-group">
                             <label>Danh mục sản phẩm</label>
                             <select name="parent_id" class="form-control select2" style="width: 100%;">
-                                <option>--Chọn danh mục cha---</option>
+                                <option value="0">Danh mục cha</option>
                                 @foreach($categories as $cate)
                                 <option value="{{$cate->parent_id}}">{{$cate->name}}</option>
                                 @endforeach

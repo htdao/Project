@@ -64,7 +64,7 @@ Product
                                 <td><a href="{{ route('backend.product.edit', ['id' => $value->id]) }}">{{$value->name}}</a></td>
                                 <td>{{$value->updated_at}}</td>
                                 <td>{{$value->status}}</td>
-                                <td>{{$value->content}}</td>
+                                <td>{!!$value->content!!}</td>
                             </tr>
                             @endforeach
                             </tbody>

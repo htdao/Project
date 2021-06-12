@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use App\Http\Requests\StoreCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -42,7 +43,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
         $category = new Category();
         $category->name = $request->get('name');
@@ -87,7 +88,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreCategoryRequest $request, $id)
     {
         $category = Category::find($id);
         $category->name = $request->get('name');

@@ -26,7 +26,9 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => 'required|min:10|max:255',
             'origin_price' => 'required|numeric|min:1000|max:1000000000',
-            'sale_price' => 'required|numeric',
+            'sale_price' => 'required|numeric|min:1000|max:1000000000',
+            'content' => 'required|min:10|max:255',
+
         ];
     }
 
@@ -38,11 +40,16 @@ class StoreProductRequest extends FormRequest
             'name.min' => 'Tên phải có ít nhất 10 kí tự!',
             'name.max' => 'Tên có tối đa 50 kí tự!',
             'origin_price.required' => 'Không được để trống!',
-            'origin_price.max' => '<1.000.000.000!',
-            'origin_price.min' => '>1.000!',
+            'origin_price.max' => 'Không vượt quá 1.000.000.000 VND',
+            'origin_price.min' => 'Không nhỏ hơn 1.000 VND',
             'origin_price.numeric' => 'Yêu cầu nhập số!',
             'sale_price.required' => 'Không được để trống!',
             'sale_price.numeric' => 'Yêu cầu nhập số!',
+            'sale_price.max' => 'Không vượt quá 1.000.000.000 VND',
+            'sale_price.min' => 'Không nhỏ hơn 1.000 VND',
+            'content.required' => 'Không được để trống',
+            'content.min' => 'Mô tả ít nhất 10 kí tự',
+            'content.max' => 'Mô tả tối đa 255 kí tự'
         ];
     }
 
