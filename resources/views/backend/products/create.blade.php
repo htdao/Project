@@ -37,14 +37,14 @@ Tạo mới
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" method="post" action="{{ route('backend.product.store') }}"> 
+                <form role="form" method="post" action="{{ route('backend.product.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Tên sản phẩm</label>
                             <input name="name" value="{{ old('name') }}" type="text" class="form-control" id="" placeholder="Điền tên sản phẩm ">
                             @error('name')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                            <div style="color: red">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
@@ -71,7 +71,7 @@ Tạo mới
                                         <label>Giá khuyến mại</label>
                                         <input value="{{ old('origin_price') }}" name="origin_price" type="text" class="form-control" placeholder="Điền giá khuyến mại">
                                         @error('origin_price')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        <div style="color: red">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@ Tạo mới
                                         <label>Giá bán</label>
                                         <input value="{{ old('sale_price') }}" type="text" name="sale_price" class="form-control" placeholder="Điền giá gốc">
                                         @error('sale_price')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        <div style="color: red">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -90,20 +90,23 @@ Tạo mới
                                 <textarea class="textarea" value="{{ old('content') }}" name="content" placeholder="Place some text here"
                                 style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                 @error('content')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                <div style="color: red">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputFile">Hình ảnh sản phẩm</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="exampleInputFile">
+                                        <input type="file" class="custom-file-input" id="exampleInputFile" name="image[]" multiple>
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                     </div>
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="">Upload</span>
                                     </div>
                                 </div>
+                                @error('image')
+                                <div style="color: red">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label>Trạng thái sản phẩm</label>

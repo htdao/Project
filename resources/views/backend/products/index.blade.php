@@ -3,11 +3,11 @@
 Product
 @endsection
 @section('css')
-    
-    
+
+
 @endsection
 @section('script')
-    
+
 @endsection
 @section('content-header')
 <div class="container-fluid">
@@ -51,9 +51,10 @@ Product
                             <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Hình ảnh</th>
                                 <th>Tên sản phẩm</th>
                                 <th>Thời gian</th>
-                                <th>Status</th>
+                                <th>Trạng thái</th>
                                 <th>Mô tả</th>
                             </tr>
                             </thead>
@@ -61,6 +62,11 @@ Product
                             @foreach($products as $value)
                             <tr>
                                 <td>{{$value->id}}</td>
+                                <td>
+                                    @if(count($value->images) > 0)
+                                        <img src="{{$value->images[0]->image_url}}" width="40px">
+                                    @endif
+                                </td>
                                 <td><a href="{{ route('backend.product.edit', ['id' => $value->id]) }}">{{$value->name}}</a></td>
                                 <td>{{$value->updated_at}}</td>
                                 <td>{{$value->status}}</td>
@@ -69,7 +75,7 @@ Product
                             @endforeach
                             </tbody>
                         </table>
-                        
+
                     </div>
                     <div>{{ $products->links() }}</div>
                     <!-- /.card-body -->

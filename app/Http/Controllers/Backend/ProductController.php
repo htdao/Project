@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Image;
@@ -10,6 +11,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductRequest;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -21,10 +23,9 @@ class ProductController extends Controller
 
     public function index()
     {
-
         $products = Product::orderBy('updated_at', 'desc')->paginate(10);
         return view('backend.products.index', [
-                'products'=>$products
+                'products'=>$products,
             ]);
     }
 
@@ -49,8 +50,6 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-
-        
         $product = new Product();
         $product->name = $request->get('name');
         $product->slug = \Illuminate\Support\Str::slug($request->get('name'));
@@ -62,7 +61,29 @@ class ProductController extends Controller
         $product->user_id = Auth::user()->id;
         $product->save();
 
-        return redirect()->route('backend.product.index');
+        if ($request->hasFile('image')){
+
+            $files = $request->file('image');
+
+            foreach ($files as $file){
+                $name = $file->getClientOriginalName();
+                $disk_name='public';
+                $path = Storage::disk('public')->putFileAs('images', $file, $name);
+
+                $image = new Image();
+                $image->name = $name;
+                $image->disk = $disk_name;
+                $image->path = $path;
+                $image->product_id = $product->id;
+                $image->save();
+            // dd($path);
+            }
+
+        }else{
+            dd('khong co file');
+        }
+
+         return redirect()->route('backend.product.index');
     }
 
     /**
@@ -75,7 +96,7 @@ class ProductController extends Controller
     {
         $products = Category::find($id)->products;
         foreach ($products as $product){
-            
+
         }
     }
 
@@ -116,6 +137,31 @@ class ProductController extends Controller
         $product->status = $request->get('status');
         $product->user_id = Auth::user()->id;
         $product->save();
+
+        if ($request->hasFile('image')){
+
+            $files = $request->file('image');
+
+            foreach ($files as $file){
+                $name = $file->getClientOriginalName();
+                $disk_name='public';
+                $path = Storage::disk('public')->putFileAs('images', $file, $name);
+                $image = Image::where('product_id', $product->id)->first();
+
+                if(!$image){
+                    $image = new Image();
+                }
+                $image->name = $name;
+                $image->disk = $disk_name;
+                $image->path = $path;
+                $image->product_id = $product->id;
+                $image->save();
+                // dd($path);
+            }
+
+        }else{
+            dd('khong co file');
+        }
 
         return redirect()->route('backend.product.index');
     }

@@ -64,7 +64,7 @@ Route::group([
 
 Route::group([
     'namespace' => 'Frontend',
-    'prefix' => 'home'
+    'prefix' => 'user'
 ], function (){
     Route::get('/home', 'HomeController@index')->name('backend.home');
 });

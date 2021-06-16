@@ -3,10 +3,10 @@
 Categories
 @endsection
 @section('css')
-    
+
 @endsection
 @section('script')
-    
+
 @endsection
 @section('content-header')
 <div class="container-fluid">
@@ -63,7 +63,9 @@ Categories
                             @endforeach
                             </tbody>
                         </table>
-                        <div>{{ $categories->links() }}</div>
+                        <div class="mt-3 float-right mr-5">
+                            {!! $categories->links() !!}
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
