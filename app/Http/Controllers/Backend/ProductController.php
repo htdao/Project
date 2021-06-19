@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -10,6 +11,7 @@ use App\Models\Image;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductRequest;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
@@ -36,10 +38,25 @@ class ProductController extends Controller
      */
     public function create()
     {
+
+//        $user=Auth::user();
+
+//        if ($user->cannot('create', Product::class)){
+//            // User hiện tại có thể cập nhật sản phẩm
+//            abort(403);
+//        }
+
+        $this->authorize('create', Product::class);
+
         $categories = Category::all();
         return view('backend.products.create', [
             'categories' => $categories
         ]);
+
+//        $categories = Category::all();
+//        return view('backend.products.create', [
+//            'categories' => $categories
+//        ]);
     }
 
     /**
@@ -106,16 +123,62 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
+        $this->authorize('update', $product);
         $categories = Category::all();
-        $product = Product::find($id);
+//        $product = Product::find($id);
         $category = Category::find($product->category_id);
-        return view('backend.products.edit', [
-            'categories' => $categories,
-            'product' => $product,
-            'category' => $category,
-        ]);
+//xuôi
+//        if (Gate::allows('update-product', $product)){
+//            // User hiện tại có thể cập nhật sản phẩm
+//            return view('backend.products.edit', [
+//                'categories' => $categories,
+//                'product' => $product,
+//                'category' => $category,
+//            ]);
+//        }else{
+//            abort(403);
+//        }
+
+        //ngược
+//        if (Gate::define('update-product', $product)){
+//            // User hiện tại có thể cập nhật sản phẩm
+//            abort(403);
+//
+//        }
+//        return view('backend.products.edit', [
+//                'categories' => $categories,
+//                'product' => $product,
+//                'category' => $category,
+//            ]);
+
+        //chỉ định user
+//        $user=User::find(99);
+//        if (Gate::forUser($user)->denies('update-product', $product)){
+//            // User hiện tại có thể cập nhật sản phẩm
+//            return view('backend.products.edit', [
+//                'categories' => $categories,
+//                'product' => $product,
+//                'category' => $category,
+//            ]);
+//        }else{
+//            abort(403);
+//        }
+
+//        $user=Auth::user();
+//        if ($user->can('update', $product)){
+            // User hiện tại có thể cập nhật sản phẩm
+            return view('backend.products.edit', [
+                'categories' => $categories,
+                'product' => $product,
+                'category' => $category,
+            ]);
+//        }else{
+//            abort(403);
+//        }
+
+
     }
 
     /**
@@ -125,9 +188,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreProductRequest $request, $id)
+    public function update(StoreProductRequest $request, Product $product)
     {
-        $product = Product::find($id);
+//        $product = Product::find($id);
         $product->name = $request->get('name');
         $product->slug = \Illuminate\Support\Str::slug($request->get('name'));
         $product->category_id = $request->get('category_id');

@@ -55,7 +55,8 @@ Product
                                 <th>Tên sản phẩm</th>
                                 <th>Thời gian</th>
                                 <th>Trạng thái</th>
-                                <th>Mô tả</th>
+                                <th>Hành động</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -67,10 +68,41 @@ Product
                                         <img src="{{$value->images[0]->image_url}}" width="40px">
                                     @endif
                                 </td>
-                                <td><a href="{{ route('backend.product.edit', ['id' => $value->id]) }}">{{$value->name}}</a></td>
+                                <td><a href="{{ route('backend.product.edit', ['product' => $value->id]) }}">{{$value->name}}</a></td>
                                 <td>{{$value->updated_at}}</td>
-                                <td>{{$value->status}}</td>
-                                <td>{!!$value->content!!}</td>
+                                <td>
+                                    @foreach(\App\Models\Product::$status_text as $key => $v)
+                                        @if($key == $value->status)
+                                            <p>{{$v}}</p>
+                                        @endif
+                                    @endforeach
+{{--                                    @if($value->status == 0)--}}
+{{--                                        <span class="badge bg-warning widspan">{{ $value->status_text }}</span>--}}
+{{--                                    @elseif($value->status == 1)--}}
+{{--                                        <span class="badge bg-success widspan">{{ $value->status_text }}</span>--}}
+{{--                                    @else--}}
+{{--                                        <span class="badge bg-danger widspan">{{ $value->status_text }}</span>--}}
+{{--                                    @endif--}}
+
+                                </td>
+                                <td>
+{{--                                    @if(\Illuminate\Support\Facades\Gate::allows('update-product',$value))--}}
+{{--                                        <button>edit</button>--}}
+{{--                                    @endif--}}
+{{--                                    @if(\Illuminate\Support\Facades\Gate::allows('delete-product',$value))--}}
+{{--                                            <button>delete</button>--}}
+{{--                                        @endif--}}
+                                    @can('update', $value)
+                                        <button>edit</button>
+                                        <button>delete</button>
+                                    @endcan
+                                    @cannot('update', $value)
+                                        <button disabled>edit</button>
+                                        <button disabled>detele</button>
+                                    @endcannot
+
+
+                                </td>
                             </tr>
                             @endforeach
                             </tbody>

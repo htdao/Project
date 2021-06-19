@@ -6,7 +6,7 @@ Product
 
 @endsection
 @section('script')
-    
+
 @endsection
 @section('content-header')
 <div class="container-fluid">
@@ -52,16 +52,41 @@ Product
                                 <th>ID</th>
                                 <th>Tên</th>
                                 <th>Email</th>
+                                <th>Quyền</th>
                                 <th>Thời gian</th>
+                                <th>Hành động</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($users as $value)
                             <tr>
                                 <td>{{$value->id}}</td>
-                                <td>{{$value->name}}</td>
+                                <td><a href="">{{$value->name}}</a></td>
                                 <td>{{$value->email}}</td>
+                                <td>
+                                    @foreach(\App\Models\User::$status_text as $key => $v)
+                                        @if($key == $value->role)
+                                            <p>{{$v}}</p>
+                                        @endif
+                                    @endforeach
+
+                                </td>
                                 <td>{{$value->updated_at}}</td>
+                                <td>
+                                    @can('update', $value)
+                                        <button>edit</button>
+                                    @endcan
+                                    @cannot('update', $value)
+                                        <button disabled>edit</button>
+                                    @endcannot
+
+                                        @can('delete', $value)
+                                            <button>delete</button>
+                                        @endcan
+                                        @cannot('delete', $value)
+                                            <button disabled>delete</button>
+                                        @endcannot
+                                </td>
                             </tr>
                             @endforeach
                             </tbody>

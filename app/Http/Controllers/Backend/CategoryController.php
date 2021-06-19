@@ -31,9 +31,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Category::class);
         $categories = Category::all();
         return view('backend.categories.create', [
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
@@ -71,9 +72,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        $category = Category::find($id);
+        $this->authorize('update', $category);
+//        $category = Category::find($id);
         $categories = Category::all();
         return view('backend.categories.edit', [
             'categories' => $categories,
@@ -88,9 +90,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreCategoryRequest $request, $id)
+    public function update(StoreCategoryRequest $request, Category $category)
     {
-        $category = Category::find($id);
+//        $category = Category::find($id);
         $category->name = $request->get('name');
         $category->slug = \Illuminate\Support\Str::slug($request->get('name'));
         $category->parent_id = $request->get('parent_id');

@@ -58,4 +58,14 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    const ADMIN = 0;
+    const USER1 = 1;
+    const USER2 = 2;
+
+    public static $status_text = [
+        self::ADMIN => 'Admin',
+        self::USER1 => 'Người bán',
+        self::USER2 => 'Người dùng',
+    ];
 }

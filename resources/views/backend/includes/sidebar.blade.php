@@ -80,7 +80,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item has-treeview">
+                    <li class="nav-item has-treeview" @cannot('view', \Illuminate\Support\Facades\Auth::user()) hidden @endcannot>
                         <a href="{{ route('backend.user.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-tree"></i>
                             <p>
@@ -103,6 +103,7 @@
                             </li>
                         </ul>
                     </li>
+{{--                    @endcan--}}
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

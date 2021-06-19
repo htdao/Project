@@ -28,11 +28,11 @@ class LoginController extends Controller
 
         if (Auth::attempt($data)) {
             $request ->session()->regenerate();
-            
-            if(Auth::User()->role == 1){
+
+            if(Auth::User()->role == 0 || Auth::User()->role == 1){
                 return redirect()->intended('admin/dashboard');
             }else{
-                return redirect()->intended('home/home');
+                return redirect()->intended('user/home');
             }
 
         }else{

@@ -1,7 +1,7 @@
 
 @extends('backend.layouts.master')
 @section('title')
-create
+edit
 @endsection
 @section('css')
 
@@ -37,7 +37,7 @@ create
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" method="post" action="{{ route('backend.category.update', ['id' => $category->id]) }}"> 
+                <form role="form" method="post" action="{{ route('backend.category.update', ['category' => $category->id]) }}">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -51,12 +51,12 @@ create
                             <label>Danh mục sản phẩm</label>
                             <select name="parent_id" class="form-control select2" style="width: 100%;">
                                 <option value="{{ $category->parent_id }}">{{ $category->name }}</option>
-                                @foreach($categories as $cate)
-                                <option value="{{$cate->parent_id}}">{{$cate->name}}</option>
+                                @foreach($categories as $category)
+                                <option value="{{$category->parent_id}}">{{$category->name}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        
+
                         <!-- /.card-body -->
 
                         <div class="card-footer">

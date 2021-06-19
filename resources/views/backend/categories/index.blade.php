@@ -51,14 +51,25 @@ Categories
                                 <th>ID</th>
                                 <th>Tên danh mục</th>
                                 <th>Thời gian</th>
+                                <th>Hành động</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($categories as $cate)
                             <tr>
                                 <td>{{$cate->id}}</td>
-                                <td><a href="{{ route('backend.category.edit', ['id' => $cate->id]) }}">{{$cate->name}}</a></td>
+                                <td><a href="{{ route('backend.category.edit', ['category' => $cate->id]) }}">{{$cate->name}}</a></td>
                                 <td>{{$cate->updated_at}}</td>
+                                <td>
+                                    @can('update', $cate)
+                                        <button>edit</button>
+                                        <button>delete</button>
+                                    @endcan
+                                        @cannot('update', $cate)
+                                            <button disabled>edit</button>
+                                            <button disabled>delete</button>
+                                        @endcannot
+                                </td>
                             </tr>
                             @endforeach
                             </tbody>

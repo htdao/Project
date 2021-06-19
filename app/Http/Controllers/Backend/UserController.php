@@ -16,6 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
+
         $users = User::orderBy('updated_at', 'desc')->paginate(10);
         return view('backend.users.index', [
                 'users'=>$users
@@ -29,6 +30,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', User::class);
          return view('backend.users.create');
     }
 
@@ -60,9 +62,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        $this->authorize('update', $user);
     }
 
     /**

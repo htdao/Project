@@ -37,7 +37,7 @@ Cập nhật
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form" method="POST" action="{{ route('backend.product.update', ['id' => $product->id]) }}" enctype="multipart/form-data">
+                    <form role="form" method="POST" action="{{ route('backend.product.update', ['product' => $product->id]) }}" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
